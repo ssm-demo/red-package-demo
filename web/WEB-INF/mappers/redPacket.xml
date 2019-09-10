@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zy.rp.dao.RedPacketDao">
+    <resultMap id="redPacket" type="cn.zy.rp.pojo.RedPackage">
+        <result property="id" column="id"/>
+        <result property="uesrId" column="user_id"/>
+        <result property="amount" column="amount"/>
+        <result property="sendDate" column="send_date"/>
+        <result property="total" column="total"/>
+        <result property="unitAmount" column="unit_amount"/>
+        <result property="stock" column="stock"/>
+        <result property="version" column="version"/>
+        <result property="note" column="note"/>
+    </resultMap>
+
+    <select id="getRedPacket" resultMap="redPacket" parameterType="long">
+        select
+        a.id,
+        a.user_id,
+        a.amount,
+        a.send_date,
+        a.total,
+        a.unit_amount,
+        a.stock,
+        a.version,
+        a.note
+        from t_red_packet a
+        where a.id=#{id}
+    </select>
+    
+    <update id="dereaseStock" parameterType="long" >
+        update t_red_packet set stock=stock-1 where id = #{id}
+    </update>
+
+    <select id="getRedPacketForUpdate" resultMap="redPacket" parameterType="long">
+        select
+        a.id,
+        a.user_id,
+        a.amount,
+        a.send_date,
+        a.total,
+        a.unit_amount,
+        a.stock,
+        a.version,
+        a.note
+        from t_red_packet a
+        where a.id=#{id} for update
+    </select>
+
+    <update id="dereaseStockByVersion">
+        update t_red_packet
+        set stock=stock-1,
+        version = version+1
+        where id = #{id}
+        and version = #{version}
+    </update>
+
+</mapper>

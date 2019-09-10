@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zy.rp.dao.UserRedPacketDao">
+    <resultMap id="userRedPacket" type="cn.zy.rp.pojo.UserRedPacket">
+        <result property="id" column="id"/>
+        <result property="redPacketId" column="red_packet_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="amount" column="amount"/>
+        <result property="grabTime" column="grab_time"/>
+        <result property="note" column="note"/>
+    </resultMap>
+    
+    <!-- -->
+    <insert id="grabRedPacket" parameterType="cn.zy.rp.pojo.UserRedPacket" useGeneratedKeys="true" keyProperty="id">
+         insert into t_user_red_packet(red_packet_id, user_id, amount, grab_time, note)
+         values (#{redPacketId},#{userId},#{amount},now(),#{note})
+    </insert>
+</mapper>
